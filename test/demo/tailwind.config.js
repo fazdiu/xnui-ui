@@ -1,4 +1,4 @@
-import nuiUI from "nui-ui/tailwindcss";
+import nuiUI from "xnui-ui/tailwindcss";
 
 /** @type {import('tailwindcss').Config} */
 export default {

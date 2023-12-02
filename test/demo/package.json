@@ -16,6 +16,6 @@
   },
   "dependencies": {
     "alpinejs": "^3.13.3",
-    "nui-ui": "file:../../"
+    "xnui-ui": "file:../../"
   }
 }
