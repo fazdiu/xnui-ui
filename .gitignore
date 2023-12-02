@@ -13,6 +13,7 @@ dist
 *.local
 *.zip
 ERRORS.md
+package-lock.json
 
 # Editor directories and files
 .vscode/*
