@@ -73,6 +73,10 @@ export function menu(
 
     const trigger = data.config.trigger;
 
+    if (name == "listbox") {
+      el.setAttribute("role", "combobox");
+    }
+
     if (!trigger || trigger == "click") {
       el.addEventListener("click", (event) => {
         data.show = !data.show;
@@ -124,6 +128,8 @@ export function menu(
 
       // aria
       data.toggle?.setAttribute("aria-expanded", show ? "true" : "false");
+      el.setAttribute("role", "listbox");
+      el.setAttribute("tabindex", "0");
 
       const elements = [el, toggleFirstChild && el.firstElementChild];
       toggleWithTransition(elements, show);
