@@ -8,7 +8,7 @@
 
 ## Documentation ##
 
-[Documentation](https://xnui-ui.vercel.app/)
+[Documentation](https://xnui-ui.vercel.app/installation.html)
 
 ## License ##
 
