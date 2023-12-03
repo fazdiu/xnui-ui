@@ -11,9 +11,7 @@ const directive = "listbox";
 
 function toggleSelected(data, el) {
   const isMultiple = data.config.multiple;
-  const index = data.selected.findIndex((v) => v.el == el);
-  const options = getOptions(el, null, true);
-  const value = options.value;
+  const index = data.selected.indexOf(el);
 
   if (!isMultiple) {
     data.selected = [];
@@ -22,12 +20,12 @@ function toggleSelected(data, el) {
   if (index > -1) {
     data.selected.splice(index, 1);
   } else {
-    data.selected.push({ el, value });
+    data.selected.push(el);
   }
 }
 
 function toString(arr) {
-  return arr.map((v) => v.el.textContent).join(",");
+  return arr.map((el) => el?.textContent).join(",");
 }
 
 function getListbox(el, Alpine) {
@@ -80,15 +78,20 @@ export default function (el, param, param1) {
 
     data.options.push(el);
 
+    el.setAttribute("role", "option");
+    el.setAttribute("tabindex", "-1");
+
     Alpine.$data(el).$watch(`_x_nui.${key}.selected`, (arr) => {
-      const isSelected = arr.some((v) => v.el === el);
+      const isSelected = arr.indexOf(el) > -1;
       if (isSelected) {
         const prevSelected = el.classList.contains("selected");
         if (!prevSelected) {
           el.classList.add("selected");
         }
+        el.setAttribute("aria-selected", "true");
       } else {
         el.classList.remove("selected");
+        el.setAttribute("aria-selected", "false");
       }
     });
 
@@ -104,11 +107,14 @@ export default function (el, param, param1) {
   // x-listbox:text
   if (value == "text") {
     const { key, data } = getListbox(el, Alpine);
+    const isInput = el.tagName == "INPUT";
+    const values = toString(data.selected);
 
-    el.innerHTML = toString(data.selected);
+    isInput ? (el.value = values) : (el.innerHTML = values);
 
     Alpine.$data(el).$watch(`_x_nui.${key}.selected`, (arr) => {
-      el.innerHTML = toString(arr);
+      const values = toString(arr);
+      isInput ? (el.value = values) : (el.innerHTML = values);
     });
   }
 

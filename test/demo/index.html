@@ -45,24 +45,14 @@
     <main
       x-data="{data_:{}}"
       x-listbox
-      x-nui="{minLength:1,expose:'data_',multiple:true,autoClose:'outside',position:'bottom-start'}"
+      x-nui="{minLength:1,expose:'data_',multiple:false,autoClose:'outside',position:'bottom-start'}"
       class="inline-flex"
     >
-      <div x-listbox:toggle class="p-2 flex items-center space-x-1 border-4 border-red-600 bg-slate-100">
-
-        <template x-for="(item, index) in data_.selected" :key="index">
-          <div class="p-1 bg-slate-100">
-            <span x-text="item.el.textContent"></span>
-            <button x-on:click="data_.selected.splice(index,1)">X</button>
-          </div>
-        </template>
-        <input
-          x-listbox:search
-          type="text"
-          class="bg-slate-100"
-          placeholder="Enter keywoards..."
-          x-init="$watch('data_.show', value => {console.log(value);value && $el.focus()})"
-        />
+      <div
+        x-listbox:toggle
+        class="flex items-center p-2 space-x-1 bg-slate-100"
+      >
+        <input type="text" x-listbox:text x-listbox:search />
       </div>
 
       <div x-listbox:options.wrapper>
@@ -71,15 +61,24 @@
           x-transition:enter="nui-animate-scale-enter"
           x-transition:leave="nui-animate-scale-leave"
         >
+          <li>
+            <input
+              x-listbox:search
+              type="text"
+              class="bg-slate-100"
+              placeholder="Enter keywoards..."
+              x-init="$watch('data_.show', value => {console.log('show',value);value && $el.focus()})"
+            />
+          </li>
           <li x-listbox:option x-nui:selected>item inside 2</li>
           <li x-listbox:option x-nui:selected>item inside 4</li>
           <li x-listbox:option>item 3</li>
           <li>
             <select :multiple="data_.multiple">
-              <template x-for="(item, index) in data_.selected" :key="index">
+              <template x-for="(el, index) in data_.selected" :key="index">
                 <option
                   :value="index"
-                  x-html="item.el?.textContent"
+                  x-html="el?.textContent"
                   selected
                 ></option>
               </template>
@@ -88,7 +87,57 @@
         </ul>
       </div>
     </main>
+    <main
+      x-data="{data_:{}}"
+      x-listbox
+      x-nui="{minLength:1,expose:'data_',multiple:true,autoClose:'outside',position:'bottom-start'}"
+      class="inline-flex"
+    >
+      <div
+        x-listbox:toggle
+        class="flex items-center p-2 space-x-1 bg-slate-100"
+      >
+        Values:
+        <template x-for="(el, index) in data_.selected" :key="index">
+          <div class="p-1 bg-slate-100">
+            <span x-text="el.textContent"></span>
+            <button x-on:click.stop="data_.selected.splice(index,1)">X</button>
+          </div>
+        </template>
+      </div>
 
+      <div x-listbox:options.wrapper>
+        <ul
+          class="bg-white rounded-md shadow-lg"
+          x-transition:enter="nui-animate-scale-enter"
+          x-transition:leave="nui-animate-scale-leave"
+        >
+          <li>
+            <input
+              x-listbox:search
+              type="text"
+              class="bg-slate-100"
+              placeholder="Enter keywoards..."
+              x-init="$watch('data_.show', value => {console.log('show',value);value && $el.focus()})"
+            />
+          </li>
+          <li x-listbox:option x-nui:selected>item inside 2</li>
+          <li x-listbox:option x-nui:selected>item inside 4</li>
+          <li x-listbox:option>item 3</li>
+          <li>
+            <select :multiple="data_.multiple">
+              <template x-for="(el, index) in data_.selected" :key="index">
+                <option
+                  :value="index"
+                  x-html="el?.textContent"
+                  selected
+                ></option>
+              </template>
+            </select>
+          </li>
+        </ul>
+      </div>
+    </main>
     <div x-disclosure>
       <div>
         <button x-disclosure:toggle>Toggle accordion 1</button>
@@ -155,9 +204,7 @@
       </label>
     </div>
 
-    <button x-on:click="$nui.open('my')">
-      Abrir dialog outside
-    </button>
+    <button x-on:click="$nui.open('my')">Abrir dialog outside</button>
     <!-- animations @see https://codepen.io/designcouch/pen/obvKxm?editors=1100 -->
     <div x-dialog x-nui:id="my">
       <div
