@@ -17,6 +17,21 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.active {
+  color: red;
+}
+
+:focus,
+[x-menu\:toggle].open,
+[x-listbox\:toggle].open {
+  outline: 0px !important;
+  @apply ring-offset-blue-500 ring-offset-2 ring-2;
+}
+
+:focus-visible {
+  outline: 0px !important;
+}
+
 a {
   font-weight: 500;
   color: #646cff;

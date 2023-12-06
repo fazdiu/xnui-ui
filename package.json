@@ -1,6 +1,6 @@
 {
   "name": "xnui-ui",
-  "version": "0.6.8",
+  "version": "0.7.0",
   "description": "Collection of fully accessible, unstyled Alpinejs UI components intended to work seamlessly with Tailwind CSS and for free.",
   "main": "./packages/module.js",
   "type": "module",
@@ -33,6 +33,7 @@
     "tailwindcss": "^3.3.5"
   },
   "dependencies": {
-    "@popperjs/core": "^2.11.8"
+    "@popperjs/core": "^2.11.8",
+    "scroll-into-view-if-needed": "^3.1.0"
   }
 }

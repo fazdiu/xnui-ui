@@ -55,9 +55,7 @@ export function _createPopper(data, show, options) {
   const { reference, menu, offset, strategy, position, boundary } = options;
 
   if (typeof createPopper === "undefined") {
-    error(
-      'E175 x-nui components require Popper (https://popper.js.org)'
-    );
+    error("E175 x-nui components require Popper (https://popper.js.org)");
   }
 
   if (!isObject(reference) || !isObject(menu)) {
@@ -457,4 +455,27 @@ export function getComponent({ el, Alpine, directive }) {
   const key = Object.keys(x_data).find((c) => x_data[c]?.main === closest);
 
   return { key, data: x_data[key] };
+}
+
+/**
+ * Toggle selected items
+ * @param {Object} data
+ * @param {Object} data.config
+ * @param {Boolean} data.config.multiple
+ * @param {Array} data.selected
+ * @param {Element} el
+ */
+export function toggleSelected(data, el) {
+  const isMultiple = data.config.multiple;
+  const index = data.selected.indexOf(el);
+
+  if (!isMultiple) {
+    data.selected = [];
+  }
+
+  if (index > -1) {
+    data.selected.splice(index, 1);
+  } else {
+    data.selected.push(el);
+  }
 }

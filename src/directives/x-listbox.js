@@ -4,25 +4,11 @@ import {
   getOptionsIndividual,
   toggle,
   validateTypes,
+  toggleSelected,
 } from "../lib/utils";
 import { menu } from "./x-menu";
 
 const directive = "listbox";
-
-function toggleSelected(data, el) {
-  const isMultiple = data.config.multiple;
-  const index = data.selected.indexOf(el);
-
-  if (!isMultiple) {
-    data.selected = [];
-  }
-
-  if (index > -1) {
-    data.selected.splice(index, 1);
-  } else {
-    data.selected.push(el);
-  }
-}
 
 function toString(arr) {
   return arr.map((el) => el?.textContent).join(",");
@@ -79,7 +65,7 @@ export default function (el, param, param1) {
     data.options.push(el);
 
     el.setAttribute("role", "option");
-    el.setAttribute("tabindex", "-1");
+    el.setAttribute("tabindex", "0");
 
     Alpine.$data(el).$watch(`_x_nui.${key}.selected`, (arr) => {
       const isSelected = arr.indexOf(el) > -1;
@@ -104,6 +90,7 @@ export default function (el, param, param1) {
       toggleSelected(data, el);
     });
   }
+
   // x-listbox:text
   if (value == "text") {
     const { key, data } = getListbox(el, Alpine);

@@ -9,7 +9,7 @@
   <body x-data class="p-5">
     <main
       x-menu
-      x-nui="{position:'bottom-start',autoClose:'outside',display:'dynamic',offset:'0,2',trigger:'click'}"
+      x-nui="{position:'bottom-start',display:'dynamic',offset:'0,2',trigger:'click'}"
       class="inline-flex"
     >
       <button href="" x-menu:toggle>Hola mundo</button>
@@ -45,11 +45,12 @@
     <main
       x-data="{data_:{}}"
       x-listbox
-      x-nui="{minLength:1,expose:'data_',multiple:false,autoClose:'outside',position:'bottom-start'}"
+      x-nui="{minLength:1,expose:'data_',multiple:false}"
       class="inline-flex"
     >
       <div
         x-listbox:toggle
+        tabindex="0"
         class="flex items-center p-2 space-x-1 bg-slate-100"
       >
         <input type="text" x-listbox:text x-listbox:search />
@@ -233,8 +234,8 @@
     </style>
     <a href="" x-tooltip="Title tooltip">tooltip</a>
 
-    <script defer src="https://unpkg.com/@popperjs/core@2"></script>
-    <script type="module" src="/cdn.min.js" defer></script>
+    <!-- <script defer src="https://unpkg.com/@popperjs/core@2"></script>
+    <script type="module" src="/cdn.min.js" defer></script> -->
     <script type="module" src="/main.js" defer></script>
   </body>
 </html>
