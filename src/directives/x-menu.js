@@ -274,9 +274,10 @@ export function menu(
     const { position, display, offset, strategy, toggleFirstChild } =
       data.config;
 
-    const toggle_ = (show) => {
+    const toggle_ = (show, showPrev) => {
+
       // force focus after closing
-      if (!show) data.toggle?.focus();
+      if (showPrev && !show) data.toggle?.focus();
 
       if (display == "dynamic") {
         _createPopper(data, show, {
@@ -300,9 +301,7 @@ export function menu(
 
     toggle_(data.show);
 
-    Alpine.$data(el).$watch(`_x_nui.${key}.show`, (show) => {
-      toggle_(show);
-    });
+    Alpine.$data(el).$watch(`_x_nui.${key}.show`, toggle_);
   }
 
   // x-menu:item

@@ -212,17 +212,17 @@
         x-dialog:backdrop
         x-transition:enter="nui-animate-fade-enter"
         x-transition:leave="nui-animate-fade-leave"
-        class="fixed inset-0 z-10 bg-slate-600"
+        class="fixed inset-0 z-40 bg-gray-900/50 dark:bg-gray-900/80"
       ></div>
       <div
         x-dialog:panel
         x-transition:enter="nui-animate-fade-enter"
         x-transition:leave="nui-animate-fade-leave"
-        class="fixed inset-x-0 top-0 z-40 m-6 text-base bg-white rounded-md text-slate-600"
+        class="fixed top-0 z-50 w-full max-w-2xl max-h-full p-4 mx-auto bg-white rounded-lg shadow dark:bg-gray-700"
       >
         <h2>Dialog</h2>
         <div>
-          <input type="text" autofocus value="value default" />
+          <input type="text" x-nui:autofocus value="value default" />
         </div>
         <button x-dialog:toggle>close</button>
       </div>

@@ -56,8 +56,6 @@ export function dialog(
 
     const { key } = createComponent({ el, Alpine, evaluate, data });
 
-    if (config.focus) el.setAttribute("tabindex", "-1");
-
     if (id) {
       window.addEventListener(`nui.show.${id}`, (e) => {
         const { data } = getDialog(el, Alpine, name);
@@ -82,24 +80,30 @@ export function dialog(
     const { data, key } = getDialog(el, Alpine, name);
     data.config.toggleFirstChild = modifiers.includes("wrapper");
     const config = data.config;
+    const initOverflowValue = document.body.style.overflow || null;
     const toggle_ = (show) => {
       // aria
-      if (show) {
-        data.main.setAttribute("role", "dialog");
-        data.main.setAttribute("aria-modal", "true");
-        data.main.removeAttribute("aria-hidden");
-      } else {
-        data.main.setAttribute("aria-hidden", "true");
-        data.main.removeAttribute("role");
-        data.main.removeAttribute("aria-modal");
+      if (value == "panel") {
+        el.setAttribute("role", "dialog");
+        if (show) {
+          el.setAttribute("aria-modal", "true");
+          el.removeAttribute("aria-hidden");
+
+          if (config.focus) el.focus();
+
+          if (config.autofocus) {
+            setTimeout(() => {
+              el?.querySelector("[x-nui\\:autofocus]")?.focus();
+            }, 0);
+          }
+        } else {
+          el.setAttribute("aria-hidden", "true");
+          el.removeAttribute("aria-modal");
+        }
       }
 
-      if (show && config.focus) data.main.focus();
-      if (show && config.autofocus) {
-        setTimeout(() => {
-          data.main.querySelector("[autofocus]")?.focus();
-        }, 0);
-      }
+      document.body.style.overflow = show ? "hidden" : initOverflowValue;
+
       if (show && config.keyboard) {
         window.addEventListener("keyup", function (e) {
           if (e.key == "Escape") {
